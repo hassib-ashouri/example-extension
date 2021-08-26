@@ -10,6 +10,40 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, "dist")
     },
+    module: {
+        rules: [
+            {
+                // look for .css or .scss files
+                test: /\.(css|scss)$/,
+                exclude: /(node_modules|bower_components)/,
+                use: [
+                    {
+                    loader: "style-loader",
+                    },
+                    {
+                    loader: "css-loader",
+                    },
+                    {
+                    loader: "sass-loader",
+                    options: {
+                        sourceMap: true,
+                    },
+                    },
+                ],
+            },
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: [
+                {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [ "@babel/preset-react"],
+                    },
+                },
+                ],
+            }]
+    },
     plugins:[
         new CopyWebpackPlugin({
             patterns: [
